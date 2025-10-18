@@ -5,14 +5,16 @@ using UnityEngine.Rendering.Universal;
 public class PlayerMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    public GameManager gameManager;
     public int speed;
     public float mouseSens;
     public Camera playerCamera;
     public Transform groundCheck;
     public float groundCheckExtends;
     public LayerMask groundLayer;
+    public LayerMask targetLayer;
     public Transform bombSpawn;
-    public Transform bomb;
+    public Bomb bomb;
     float camRotation;
     
     bool canJump;
@@ -36,10 +38,6 @@ public class PlayerMovement : MonoBehaviour
         camRotation = Mathf.Clamp(camRotation, -8f, 45f);
         playerCamera.transform.localRotation = Quaternion.Euler(camRotation, 0, 0);
         
-
-
-
-
         //jumping
         if (Input.GetKeyDown("space") && IsGrounded())
         {
@@ -50,8 +48,9 @@ public class PlayerMovement : MonoBehaviour
 
         if (Input.GetButtonDown("Fire1"))
         {
-            Instantiate(bomb, bombSpawn.position, Quaternion.Euler(0,0,0));
-            bomb.GetComponent<Rigidbody>().AddForce(transform.forward, ForceMode.Force);
+            Bomb newBomb = Instantiate(bomb, bombSpawn.position, Quaternion.Euler(0, 0, 0));
+            newBomb.player = transform;
+
         }
     }
 
@@ -59,5 +58,15 @@ public class PlayerMovement : MonoBehaviour
     {
         //Grounded check
         return Physics.Raycast(transform.GetComponent<Collider>().bounds.center, -transform.up, transform.GetComponent<Collider>().bounds.extents.y + groundCheckExtends, groundLayer);
+
+
     }
+
+    public void Die()
+    {
+        gameManager.resetScene();
+    }
+
+    
+
 }
