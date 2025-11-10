@@ -5,7 +5,7 @@ using UnityEngine.Rendering.Universal;
 public class PlayerMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    public GameManager gameManager;
+    public GameManager gameManager; // TODO maybe: search in scene or singleton?
     public int speed;
     public float mouseSens;
     public Camera playerCamera;
@@ -16,10 +16,13 @@ public class PlayerMovement : MonoBehaviour
     public Transform bombSpawn;
     public Bomb bomb;
     float camRotation;
+    Rigidbody rb;
     
     bool canJump;
     void Start()
     {
+        rb=GetComponent<Rigidbody>();
+
         Cursor.lockState = CursorLockMode.Locked;
     }
 
@@ -29,7 +32,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //movement
-        transform.Translate(0, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime);
+        transform.Translate(0, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime); // TODO: proper physics
         transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, 0);
         //Horizontal Rotation
         transform.Rotate(0, Input.GetAxis("Mouse X"), 0);
@@ -42,7 +45,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown("space") && IsGrounded())
         {
             canJump = false;
-            transform.GetComponent<Rigidbody>().AddForce(transform.up, ForceMode.Impulse);
+            transform.GetComponent<Rigidbody>().AddForce(transform.up, ForceMode.Impulse); // TODO maybe: cache the rigidbody (see above)
             Debug.Log(canJump);
         }
 

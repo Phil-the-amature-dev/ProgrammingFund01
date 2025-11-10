@@ -18,7 +18,7 @@ public class TrapScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.layer.Equals(3)){
+        if (collision.gameObject.layer.Equals(3)){ // use tags instead?
             playerScript.Die();
         }
     }

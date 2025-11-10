@@ -19,5 +19,7 @@ public class SinMovement : MonoBehaviour
         //remember X and Z
         float yLevel = range * Mathf.Sin(Time.time * speed);
         transform.position = startPosition + new Vector3(0, yLevel, 0);
+
+        // TODO: Move correctly! (kinematic rb - also: rb.movePosition)
     }
 }

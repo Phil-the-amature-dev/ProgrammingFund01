@@ -5,25 +5,28 @@ using UnityEngine.Rendering;
 public class Bomb : MonoBehaviour
 {
     
-    public Transform player;
+    public Transform player; // ? -> set by player
     public GameManager manager;
     public float explosionRadius;
     public float explosionStrength;
     public float upwardsModifier;
-    public Material burnMaterial;
+    public Material burnMaterial; // TODO maybe: move to the Target class
+    // TODO: just use one array here. Why copy??
+    // TODO maybe: just pick random particle effects at runtime, instead of diff prefabs
     public GameObject effect1;
     public GameObject effect2;
     public GameObject effect3;
     public GameObject[] effectList;
-    private Collider[] hitTargets = new Collider[50];
+    private Collider[] hitTargets = new Collider[50]; // ??? -> explained: non-allocating
     //public bool HorizontalTrajectory = true;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        player.TryGetComponent(out PlayerMovement playerScript);
+        player.TryGetComponent(out PlayerMovement playerScript); // Why Try? (will still give Exception if the component is not there
         manager = playerScript.gameManager;
+        
         effectList[0] = effect1;
         effectList[1] = effect2;
         effectList[2] = effect3;
@@ -53,7 +56,7 @@ public class Bomb : MonoBehaviour
         for (int i = 0; i < targetNum; i++)
         {
                 
-                if (hitTargets[i].TryGetComponent(out Rigidbody rb) && hitTargets[i].gameObject.layer != 3 && hitTargets[i].gameObject.layer != 7)
+                if (hitTargets[i].TryGetComponent(out Rigidbody rb) && hitTargets[i].gameObject.layer != 3 && hitTargets[i].gameObject.layer != 7) // TODO maybe: no hard coded layers?
                 {
                     rb.AddExplosionForce(explosionStrength, transform.position, explosionRadius, upwardsModifier);
                     if (hitTargets[i].TryGetComponent(out Target target))
@@ -64,7 +67,7 @@ public class Bomb : MonoBehaviour
                             target.isBurnt = true;
                             Debug.Log("TARGETHIT");
                             Debug.Log(hitTargets[i]);
-                            target.gameObject.GetComponent<Renderer>().material = burnMaterial;
+                            target.gameObject.GetComponent<Renderer>().material = burnMaterial; // TODO maybe: add this functionality to the target script
                         }
                     }
                     
