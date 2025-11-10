@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3166327747979879298
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5211492015322106481}
+  m_Layer: 0
+  m_Name: CameraPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5211492015322106481
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3166327747979879298}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.027690519, z: -0, w: 0.99961656}
+  m_LocalPosition: {x: 0, y: 0.385, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 8982935797833299782}
+  m_Father: {fileID: 6404640569590050187}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3991616618449574500
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,12 +90,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4056286659395361754}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.057, y: 2.227, z: -3.315}
+  m_LocalRotation: {x: -0, y: -0.027690519, z: -0, w: 0.99961656}
+  m_LocalPosition: {x: 0.1266052, y: 1.8420002, z: -3.3130713}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6404640569590050187}
+  m_Father: {fileID: 5211492015322106481}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &6576286640285895970
 Camera:
@@ -325,7 +357,7 @@ GameObject:
   - component: {fileID: 5604251802402790678}
   - component: {fileID: 520611186863139020}
   m_Layer: 3
-  m_Name: Capsule
+  m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -345,9 +377,9 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2979743177774626125}
-  - {fileID: 8982935797833299782}
   - {fileID: 3057290950390671707}
   - {fileID: 3128159625549223708}
+  - {fileID: 5211492015322106481}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -3.174, z: 0}
 --- !u!33 &5123425967546845865
@@ -482,3 +514,4 @@ MonoBehaviour:
     m_Bits: 256
   bombSpawn: {fileID: 3128159625549223708}
   bomb: {fileID: -942735086594929267, guid: fb4d78c1fcf6e4944bd9a95dc852f1b8, type: 3}
+  camPivot: {fileID: 5211492015322106481}

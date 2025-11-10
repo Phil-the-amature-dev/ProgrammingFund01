@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
         
         if (score >= goal)
         {
-            SceneManager.LoadScene(2); // TODO: not hard coded
+            SceneManager.LoadScene(2); 
         }
         if (minutes <= 0)
         {

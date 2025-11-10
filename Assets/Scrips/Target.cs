@@ -1,8 +1,10 @@
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Target : MonoBehaviour
 {
-    public bool isBurnt = false;    
+    public bool isBurnt = false;
+    public Material burnMaterial;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,6 +17,10 @@ public class Target : MonoBehaviour
         
     }
 
-    
+    public void Burn()
+    {
+        isBurnt = true;
+        gameObject.GetComponent<Renderer>().material = burnMaterial;
+    }
 }
   

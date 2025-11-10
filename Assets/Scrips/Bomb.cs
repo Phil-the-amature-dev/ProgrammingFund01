@@ -10,7 +10,6 @@ public class Bomb : MonoBehaviour
     public float explosionRadius;
     public float explosionStrength;
     public float upwardsModifier;
-    public Material burnMaterial; // TODO maybe: move to the Target class
     // TODO: just use one array here. Why copy??
     // TODO maybe: just pick random particle effects at runtime, instead of diff prefabs
     public GameObject effect1;
@@ -64,10 +63,9 @@ public class Bomb : MonoBehaviour
                         if (!target.isBurnt)
                         {
                             manager.addScore(1);
-                            target.isBurnt = true;
                             Debug.Log("TARGETHIT");
                             Debug.Log(hitTargets[i]);
-                            target.gameObject.GetComponent<Renderer>().material = burnMaterial; // TODO maybe: add this functionality to the target script
+                            target.Burn(); 
                         }
                     }
                     

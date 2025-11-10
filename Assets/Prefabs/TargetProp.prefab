@@ -153,3 +153,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Target
   isBurnt: 0
+  burnMaterial: {fileID: 2100000, guid: 0356b5b27ecdb334ca9d93cff1c532bd, type: 2}

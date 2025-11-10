@@ -15,13 +15,14 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask targetLayer;
     public Transform bombSpawn;
     public Bomb bomb;
+    [SerializeField] private Transform camPivot;
     float camRotation;
     Rigidbody rb;
     
     bool canJump;
     void Start()
     {
-        rb=GetComponent<Rigidbody>();
+        rb = GetComponent<Rigidbody>();
 
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -39,13 +40,13 @@ public class PlayerMovement : MonoBehaviour
         //vertical cam rotation
         camRotation -= Input.GetAxis("Mouse Y");
         camRotation = Mathf.Clamp(camRotation, -8f, 45f);
-        playerCamera.transform.localRotation = Quaternion.Euler(camRotation, 0, 0);
+        camPivot.transform.localRotation = Quaternion.Euler(camRotation, 0, 0);
         
         //jumping
         if (Input.GetKeyDown("space") && IsGrounded())
         {
             canJump = false;
-            transform.GetComponent<Rigidbody>().AddForce(transform.up, ForceMode.Impulse); // TODO maybe: cache the rigidbody (see above)
+            rb.AddForce(transform.up, ForceMode.Impulse); 
             Debug.Log(canJump);
         }
 
