@@ -15,6 +15,9 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask targetLayer;
     public Transform bombSpawn;
     public Bomb bomb;
+
+    private bool jumpRequest = false;
+
     [SerializeField] private Transform camPivot;
     float camRotation;
     Rigidbody rb;
@@ -32,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //movement
+        //movement 
         transform.Translate(0, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime); // TODO: proper physics
         transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, 0);
         //Horizontal Rotation
@@ -45,9 +48,7 @@ public class PlayerMovement : MonoBehaviour
         //jumping
         if (Input.GetKeyDown("space") && IsGrounded())
         {
-            canJump = false;
-            rb.AddForce(transform.up, ForceMode.Impulse); 
-            Debug.Log(canJump);
+            jumpRequest = true;
         }
 
         if (Input.GetButtonDown("Fire1"))
@@ -56,6 +57,21 @@ public class PlayerMovement : MonoBehaviour
             newBomb.player = transform;
 
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (jumpRequest)
+        {
+            canJump = false;
+            jumpRequest = false;
+            rb.AddForce(transform.up, ForceMode.Impulse);
+            Debug.Log(canJump);
+        }
+        
+        //MOVE FORWARD 
+        //rb.AddForce(transform.forward, ForceMode.VelocityChange);
+        
     }
 
     private bool IsGrounded()
