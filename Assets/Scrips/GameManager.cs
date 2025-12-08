@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public int goal;
     private bool timerActive = true;
     public float minutes;
+    public int nextSceneBuildIndex;
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private TMP_Text scoreText;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -39,7 +40,7 @@ public class GameManager : MonoBehaviour
         
         if (score >= goal)
         {
-            SceneManager.LoadScene(2); 
+            SceneManager.LoadScene(nextSceneBuildIndex); 
         }
         if (minutes <= 0)
         {

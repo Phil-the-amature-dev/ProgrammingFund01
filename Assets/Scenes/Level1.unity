@@ -8314,6 +8314,10 @@ PrefabInstance:
       propertyPath: timerText
       value: 
       objectReference: {fileID: 1083229829}
+    - target: {fileID: 8726107306122894235, guid: 318b5c05556afe84a9bba4ca20a6fa36, type: 3}
+      propertyPath: nextSceneBuildIndex
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
