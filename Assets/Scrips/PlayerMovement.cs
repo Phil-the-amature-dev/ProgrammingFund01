@@ -6,7 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     public GameManager gameManager; // TODO maybe: search in scene or singleton?
-    public int speed;
+    public float baseSpeed;
     public float mouseSens;
     public Camera playerCamera;
     public Transform groundCheck;
@@ -15,9 +15,18 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask targetLayer;
     public Transform bombSpawn;
     public Bomb bomb;
+    public float linearDamping;
+    public float linearDampingAirborne;
+    public float AirbourneSpeedMultiplier;
 
     private bool jumpRequest = false;
+    private bool HorizontalMoveRequest = false;
+    private bool VerticalMoveRequest = false;
+    private float airborneSpeed;
+    private float currentSpeed;
 
+    private float verticalAxis;
+    private float horizontalAxis;
     [SerializeField] private Transform camPivot;
     float camRotation;
     Rigidbody rb;
@@ -28,6 +37,9 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody>();
 
         Cursor.lockState = CursorLockMode.Locked;
+
+        currentSpeed = baseSpeed;
+        airborneSpeed = baseSpeed * AirbourneSpeedMultiplier;
     }
 
     
@@ -36,8 +48,20 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         //movement 
-        transform.Translate(0, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime); // TODO: proper physics
-        transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, 0);
+        horizontalAxis = Input.GetAxis("Horizontal");
+        verticalAxis = Input.GetAxis("Vertical");
+
+        if (horizontalAxis != 0)
+        {
+            HorizontalMoveRequest = true; 
+        }
+        if (verticalAxis != 0)
+        {
+            VerticalMoveRequest = true;
+        }
+        
+        //transform.Translate(0, 0, Input.GetAxis("Vertical") * speed * Time.deltaTime); // TODO: proper physics
+        //transform.Translate(Input.GetAxis("Horizontal") * speed * Time.deltaTime, 0, 0);
         //Horizontal Rotation
         transform.Rotate(0, Input.GetAxis("Mouse X"), 0);
         //vertical cam rotation
@@ -57,10 +81,24 @@ public class PlayerMovement : MonoBehaviour
             newBomb.player = transform;
 
         }
+
+        //adjust damping to avoid slow fall
+        if (!IsGrounded())
+        {
+            rb.linearDamping = linearDampingAirborne;
+            currentSpeed = airborneSpeed;
+        }
+        if (IsGrounded())
+        {
+            rb.linearDamping = linearDamping;
+            currentSpeed = baseSpeed;
+            
+        }
     }
 
     private void FixedUpdate()
     {
+        //execute jump
         if (jumpRequest)
         {
             canJump = false;
@@ -69,9 +107,17 @@ public class PlayerMovement : MonoBehaviour
             Debug.Log(canJump);
         }
         
-        //MOVE FORWARD 
-        //rb.AddForce(transform.forward, ForceMode.VelocityChange);
+        //execute movement
         
+        if (VerticalMoveRequest)
+        {
+            rb.AddForce(transform.forward * verticalAxis * currentSpeed, ForceMode.VelocityChange);
+        }
+        if (HorizontalMoveRequest)
+        {
+            rb.AddForce(transform.right * horizontalAxis * currentSpeed, ForceMode.VelocityChange);
+        }
+
     }
 
     private bool IsGrounded()
@@ -85,6 +131,7 @@ public class PlayerMovement : MonoBehaviour
     public void Die()
     {
         gameManager.resetScene();
+        
     }
 
     
